@@ -1,8 +1,7 @@
----
-name: 'Story Number: '
-about: Brief name about story feature
+# Story Number:
+Brief name for story
 
----
+----
 
 As a **"User Role"**, I want **"describe feature"**, so that I can **"describe how a user will use feature"**
 
