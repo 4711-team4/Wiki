@@ -1,0 +1,13 @@
+<h1>Home#index</h1>
+<p>Find me in app/views/home/index.html.erb</p>
+
+<h3>This is a sample home page</h3>
+
+<% if user_signed_in? %>
+<p><strong>YOU ARE SIGNED IN AS A USER&nbsp;</strong> <%= link_to('Logout', destroy_user_session_path, method: :delete) %></p> 
+<% elsif admin_signed_in? %>
+<p><strong>YOU ARE SIGNED IN AS AN ADMIN&nbsp;</strong><%= link_to('Logout', destroy_admin_session_path, method: :delete) %></p> 
+<% end %>
+
+<p><%= link_to "Go to a page only Users (and Admins) can access", controller: "test", action: "user" %><br>
+<%= link_to "Go to a page only Admins can access", controller: "test", action: "admin" %></p>
