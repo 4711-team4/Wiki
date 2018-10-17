@@ -32,3 +32,4 @@
 
 # Ignore directories from common IDEs
 .idea/
+.vscode/
