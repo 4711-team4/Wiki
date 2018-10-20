@@ -36,4 +36,10 @@ ActiveRecord::Schema.define(version: 2018_10_16_215209) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "wiki_pages", force: :cascade do |t|
+    t.text "html"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
 end
