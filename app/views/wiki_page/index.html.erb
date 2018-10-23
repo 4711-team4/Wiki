@@ -6,5 +6,5 @@
 <% end %>
 
 <% @pages.each do |page|%>
-  <p><%= page.title %></p>
+  <%= link_to page.title, wiki_page_path(page) %><br>
 <% end %>

@@ -7,3 +7,6 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create(email: "user@example.com", password: "password")
 Admin.create(email: "admin@example.com", password: "password")
+WikiPage.create(title: "Pandas", html: "<p>Pandas are cute.</p>")
+WikiPage.create(title: "Rhinos", html: "<p>Rhinos are fierce.</p>")
+WikiPage.create(title: "Camels", html: "<p>Camels are useful.</p>")
