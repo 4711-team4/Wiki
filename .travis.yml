@@ -1,15 +1,23 @@
+env:
+  global:
+    - CC_TEST_REPORTER_ID=3f03269305d0af5e2114b34153fade7d3adf2da5e960e93af50838e4622d5f58
 addons:
   postgresql: 9.6
 before_script:
-- cp config/database.yml.travis config/database.yml
-- psql -c 'create database travis_ci_test;' -U postgres
+  - cp config/database.yml.travis config/database.yml
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 dist: trusty
 language: ruby
 rvm:
-- 2.5.1
+  - 2.5.1
 script:
-- bundle exec rails db:migrate RAILS_ENV=test
-- bundle exec rspec
+  - bundle exec rails db:migrate RAILS_ENV=test
+  - bundle exec rspec
 deploy:
   provider: heroku
   app: cs4711-wiki
