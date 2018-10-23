@@ -6,7 +6,7 @@ RSpec.describe WikiPageController, type: :controller do
     it "returns http success" do
       get :random
       if WikiPage.all.blank?
-        expect(response).to redirect_to(:wiki_page_list)
+        expect(response).to redirect_to(:wiki_page_index)
       else
         expect(response).to have_http_status(:success)
       end
@@ -43,13 +43,13 @@ RSpec.describe WikiPageController, type: :controller do
 
   describe "GET #index" do
     it "returns http success" do
-      get :list
+      get :index
       expect(response).to have_http_status(:success)
     end
     context "No Pages in the list" do
       render_views
       it "Shows a no article message" do
-        get :list
+        get :index
         expect(response.body).to include('No Wiki pages on the site :(')
       end
     end
