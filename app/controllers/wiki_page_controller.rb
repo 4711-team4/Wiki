@@ -41,6 +41,11 @@ class WikiPageController < ApplicationController
     @pages = WikiPage.all
   end
 
+  def destroy
+    WikiPage.find(params[:id]).destroy
+    redirect_to wiki_page_index_url
+  end
+
   # @!method checks if the form is valid for backend
   def wiki_page_params
     params.require(:wiki_page).permit(:title)
