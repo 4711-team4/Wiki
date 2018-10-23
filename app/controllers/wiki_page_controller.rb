@@ -48,7 +48,7 @@ class WikiPageController < ApplicationController
 
   # @!method checks if the form is valid for backend
   def wiki_page_params
-    params.require(:wiki_page).permit(:title)
+    params.require(:wiki_page).permit(:title, :content)
   end
 
 end
