@@ -4,7 +4,7 @@ class WikiPageController < ApplicationController
   # @!method redirects the user to a random page
   def random
     if WikiPage.all.blank?
-      redirect_to action: 'list'
+      redirect_to action: 'index'
     else
       offset = rand(WikiPage.count)
       id = WikiPage.offset(offset).first.id
@@ -25,11 +25,25 @@ class WikiPageController < ApplicationController
   # @!method updates a wiki page with some edits
   def update; end
 
+  # @!method lets users create a new wiki page
+  def new
+    @page = WikiPage.new
+  end
+
   # @!method creates a new wiki page
-  def new; end
+  def create
+    @page = WikiPage.new(wiki_page_params)
+    redirect_to @page if @page.save
+  end
 
   # @!method list all wiki pages created
-  def list
+  def index
     @pages = WikiPage.all
   end
+
+  # @!method checks if the form is valid for backend
+  def wiki_page_params
+    params.require(:wiki_page).permit(:title)
+  end
+
 end

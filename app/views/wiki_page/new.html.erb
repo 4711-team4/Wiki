@@ -1,2 +1,13 @@
-<h1>WikiPage#new</h1>
-<p>Find me in app/views/wiki_page/new.html.erb</p>
+<h1>Create a new Wiki page</h1>
+
+<%= form_for @page, url: wiki_page_index_url do |form| %>
+  <%= form.label :title %>
+  <%= form.text_field :title  %>
+  <br/>
+  <%= form.label 'Content' %>
+  <%= form.text_area :html %>
+  <br/>
+  <%= form.submit 'Create Page' %>
+<% end %>
+
+<%= link_to 'Back', wiki_page_index_url %>

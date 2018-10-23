@@ -2,8 +2,9 @@
 
 <% if @pages.blank? %>
   <p><strong> No Wiki pages on the site :(</strong></p>
+  <%= link_to 'Would you like to create one', action: 'new' %>
 <% end %>
 
 <% @pages.each do |page|%>
-  <p><%= page.id %></p>
+  <p><%= page.title %></p>
 <% end %>

@@ -27,12 +27,12 @@ RSpec.describe WikiPageController, type: :controller do
     # end
   end
 
-  describe "GET #update" do
-    it "returns http success" do
-      get :update
-      expect(response).to have_http_status(:success)
-    end
-  end
+  # describe "GET #update" do
+  #   it "returns http success" do
+  #     get :update
+  #     expect(response).to have_http_status(:success)
+  #   end
+  # end
 
   describe "GET #new" do
     it "returns http success" do
@@ -41,7 +41,7 @@ RSpec.describe WikiPageController, type: :controller do
     end
   end
 
-  describe "GET #list" do
+  describe "GET #index" do
     it "returns http success" do
       get :list
       expect(response).to have_http_status(:success)
