@@ -14,7 +14,7 @@
 
     <nav style="margin: 0;">
       <div class="nav-wrapper blue-grey darken-1">
-        <a href="#" class="brand-logo center">WIKI PAGE</a>
+        <%= link_to 'WIKI PAGE', {controller: :wiki_page , action: :index}, {:class => "brand-logo center"} %>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
           <li><%= link_to "User Login", :controller => "/test", :action => :user %></li>
           <li><%= link_to "Admin Login", :controller => "/test", :action => :admin %></li>
