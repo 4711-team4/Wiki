@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Wiki</title>
+
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +11,21 @@
   </head>
 
   <body>
-	  
-		   <%= yield %>
+  <!-- <div class= "container"> -->
+
+    <nav margin: 0;>
+      <div class="nav-wrapper blue-grey darken-1">
+        <a href="#" class="brand-logo center">WIKI PAGE</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><%= link_to "User Login", controller: "test", action: "user" %></li>
+          <li><%= link_to "Admin Login", controller: "test", action: "admin" %></li>
+        </ul>
+      </div>
+    </nav>
+
+
+  <!-- </div> -->
+
+  <%= yield %>
+  </body>
 </html>

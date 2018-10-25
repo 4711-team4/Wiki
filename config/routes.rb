@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   root to: 'home#index'
 
+  # format: controller_name/controller_action
   get 'test/user'
   get 'test/admin'
   get 'home/index'
