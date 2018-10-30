@@ -16,8 +16,14 @@
       <div class="nav-wrapper light-blue darken-4">
         <%= link_to 'WIKI PAGE', {:controller  => "/wiki_page" , :action => :index}, {:class => "brand-logo center"} %>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><%= link_to "User Login", :controller => "/test", :action => :user %></li>
-          <li><%= link_to "Admin Login", :controller => "/test", :action => :admin %></li>
+
+          <% if user_signed_in? || admin_signed_in? %>
+            <li><%= link_to('Logout', destroy_user_session_path, method: :delete)%></li>>
+          <% else %>
+            <li><%= link_to "User Login", :controller => "/test", :action => :user %></li>
+            <li><%= link_to "Admin Login", :controller => "/test", :action => :admin %></li>
+          <% end %>
+
         </ul>
       </div>
     </nav>
