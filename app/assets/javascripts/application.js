@@ -13,4 +13,10 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
 //= require_tree .
+$(document).on('turbolinks:load', function () {
+    $("#flash_messages").delay(2000).slideUp(500, function () {
+        // $("#flash_messages").alert('close');
+    });
+});

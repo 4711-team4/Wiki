@@ -4,9 +4,10 @@
 <!--<h3>This is a sample home page</h3> -->
 
 <% if user_signed_in? %>
-<p><strong>YOU ARE SIGNED IN AS A USER&nbsp;</strong> <%= link_to('Logout', destroy_user_session_path, method: :delete) %></p> 
-<% elsif admin_signed_in? %>
-<p><strong>YOU ARE SIGNED IN AS AN ADMIN&nbsp;</strong><%= link_to('Logout', destroy_admin_session_path, method: :delete) %></p> 
+<p><strong>YOU ARE SIGNED IN AS <%= current_user.username %>&nbsp;</strong> <%= link_to('Logout', destroy_user_session_path, method: :delete) %></p> 
+<% if current_user.admin %>
+<p><strong>THIS USER HAS ADMIN PRIVLEDGES</strong></p>
+<% end %>
 <% end %>
 
 <!--<p><%= link_to "Go to a page only Users (and Admins) can access", controller: "test", action: "user" %><br>
