@@ -15,6 +15,8 @@
 //= require turbolinks
 //= require jquery
 //= require_tree .
+//= require quill
+
 $(document).on('turbolinks:load', function () {
     $("#flash_messages").delay(2000).slideUp(500, function () {
         // $("#flash_messages").alert('close');
