@@ -23,7 +23,15 @@ class WikiPageController < ApplicationController
   end
 
   # @!method updates a wiki page with some edits
-  def update; end
+  def update
+    @page = WikiPage.find(params[:id])
+    if @page.update(wiki_page_params)
+      redirect_to @page
+    else
+      flash[:error] = 'Could not save your changes' # let the user know about the error
+      render 'edit'
+    end
+  end
 
   # @!method lets users create a new wiki page
   def new
