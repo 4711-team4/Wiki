@@ -1,12 +1,16 @@
 <h1>Create a new Wiki page</h1>
 
 <%= form_for @page, url: wiki_page_index_url do |form| %>
-  <%= form.label :title %>
-  <%= form.text_field :title  %>
-  <br/>
-  <%= form.label 'Content' %>
-  <%= form.text_area :content %>
-  <br/>
+  <%= form.fields_for :revisions do |ff| %>
+  <div>
+    <%= ff.label :title %>
+    <%= ff.text_field :title %>
+
+    <%= ff.label :content %>
+    <%= ff.text_field :content %>
+  </div>
+<% end %>
+
   <%= form.submit 'Create Page' %>
 <% end %>
 

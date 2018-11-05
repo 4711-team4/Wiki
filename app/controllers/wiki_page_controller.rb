@@ -15,6 +15,8 @@ class WikiPageController < ApplicationController
   # @!method shows a specific wiki page
   def show
     @page = WikiPage.find(params[:id])
+    @revisions = @page.revisions.all.sort_by{|revision| revision.created_at}
+    @current_revision = @revisions.last
   end
 
   # @!method lets users edit a wiki page
@@ -33,7 +35,7 @@ class WikiPageController < ApplicationController
   # @!method creates a new wiki page
   def create
     @page = WikiPage.new(wiki_page_params)
-    redirect_to @page if @page.save
+    redirect_to @page if @page.save!
   end
 
   # @!method list all wiki pages created
@@ -48,7 +50,7 @@ class WikiPageController < ApplicationController
 
   # @!method checks if the form is valid for backend
   def wiki_page_params
-    params.require(:wiki_page).permit(:title, :content)
+    params.require(:wiki_page).permit(:locked, revisions_attributes: [:title, :content])
   end
 
 end

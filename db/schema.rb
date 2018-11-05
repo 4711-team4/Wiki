@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_30_195808) do
+ActiveRecord::Schema.define(version: 2018_10_31_013233) do
+
+  create_table "revisions", force: :cascade do |t|
+    t.string "title"
+    t.text "content"
+    t.integer "user_id"
+    t.integer "wiki_page_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_revisions_on_user_id"
+    t.index ["wiki_page_id"], name: "index_revisions_on_wiki_page_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -28,10 +39,9 @@ ActiveRecord::Schema.define(version: 2018_10_30_195808) do
   end
 
   create_table "wiki_pages", force: :cascade do |t|
-    t.text "content"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "title"
+    t.boolean "locked", default: false
   end
 
 end
