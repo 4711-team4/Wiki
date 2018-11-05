@@ -1,7 +1,7 @@
 <h1>Create a new Wiki page</h1>
 
 <%= form_for @page, url: wiki_page_index_url do |form| %>
-  <%= form.fields_for :revisions do |ff| %>
+  <%= form.fields_for :revisions, Revision.new do |ff| %>
   <div>
     <%= ff.label :title %>
     <%= ff.text_field :title %>
@@ -16,7 +16,9 @@
 
 <%= link_to 'Back', wiki_page_index_url %>
 
-</br></br></br>I DONT KNOW RUBY AND HOW TO GET QUILLSJS WORKING LMAO </br></br></br>
+<br/>
+<br/>
+<br/>
 <!-- Include stylesheet -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 

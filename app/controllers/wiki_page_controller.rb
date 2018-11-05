@@ -1,5 +1,7 @@
 # Lets user interact with wiki pages
 class WikiPageController < ApplicationController
+  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_admin!, only: :destroy
 
   # @!method redirects the user to a random page
   def random
@@ -43,6 +45,7 @@ class WikiPageController < ApplicationController
   # @!method creates a new wiki page
   def create
     @page = WikiPage.new(wiki_page_params)
+    @page.revisions.last.user = current_user
     redirect_to @page if @page.save!
   end
 
@@ -60,5 +63,4 @@ class WikiPageController < ApplicationController
   def wiki_page_params
     params.require(:wiki_page).permit(:locked, revisions_attributes: [:title, :content])
   end
-
 end
