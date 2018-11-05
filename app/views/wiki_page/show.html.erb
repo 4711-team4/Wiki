@@ -10,6 +10,8 @@
 <p>Last updated by <%= @current_revision.user.username %> at <%= @current_revision.updated_at %></p>
 <%= raw @current_revision.content %>
 
+<%= button_to 'Edit', edit_wiki_page_path(@page), method: :get %>
+
 <hr>
 <h2>Previous Versions</h2>
 <table>
