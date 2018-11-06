@@ -9,11 +9,11 @@ end
 
 def delete_temp_page
   wiki_page = WikiPage.all.first
+  wiki_page.destroy
   user = User.where(username: "rspec").first
   unless user.nil?
     user.destroy
   end
-  wiki_page.destroy
 end
 
 RSpec.describe WikiPageController, type: :controller do
