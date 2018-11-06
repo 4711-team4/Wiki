@@ -1,12 +1,18 @@
 require 'rails_helper'
 
 def create_temp_page
-  wiki_page = WikiPage.new(title: 'Hello', content: 'world')
+  user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
+  wiki_page = WikiPage.create(locked: false)
+  wiki_page.revisions.new(title: "Hello", content: "world", user: user).save!
   wiki_page.save
 end
 
 def delete_temp_page
   wiki_page = WikiPage.all.first
+  user = User.where(username: "rspec").first
+  unless user.nil?
+    user.destroy
+  end
   wiki_page.destroy
 end
 
@@ -25,8 +31,7 @@ RSpec.describe WikiPageController, type: :controller do
     end
     context 'Database has pages' do
       before do
-        page = WikiPage.new(title: "Test Page", content: "test")
-        page.save
+        create_temp_page()
       end
       it 'should redirect to a random page' do
         get :random
@@ -34,8 +39,7 @@ RSpec.describe WikiPageController, type: :controller do
         expect(response).to redirect_to(page)
       end
       after do
-        page = WikiPage.find_by(title: "Test Page")
-        page.destroy
+        delete_temp_page()
       end
     end
   end
@@ -55,16 +59,33 @@ RSpec.describe WikiPageController, type: :controller do
   end
 
   describe "GET #edit" do
-    before do
-      create_temp_page
+    context "when no user is signed in" do
+      before do
+        create_temp_page
+      end
+      it "returns 302 found" do
+        page = WikiPage.all.first
+        get :edit, :params => {id: page.id}
+        expect(response).to have_http_status(:found)
+      end
+      after do
+        delete_temp_page
+      end
     end
-    it "returns http success" do
-      page = WikiPage.all.first
-      get :edit, :params => {id: page.id}
-      expect(response).to have_http_status(:success)
-    end
-    after do
-      delete_temp_page
+    context "when a user is signed in" do
+      before do
+        create_temp_page
+        user = User.where(username: "rspec").first
+        sign_in user
+      end
+      it "returns http success" do
+        page = WikiPage.all.first
+        get :edit, :params => {id: page.id}
+        expect(response).to have_http_status(:success)
+      end
+      after do
+        delete_temp_page
+      end
     end
   end
 
@@ -85,9 +106,24 @@ RSpec.describe WikiPageController, type: :controller do
   end
 
   describe "GET #new" do
-    it "returns http success" do
-      get :new
-      expect(response).to have_http_status(:success)
+    context "when no user is signed in" do
+      it "returns http found" do
+        get :new
+        expect(response).to have_http_status(:found)
+      end
+    end
+    context "when a user is signed in" do
+      before do
+        user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
+        sign_in user
+      end
+      it "returns http success" do
+        get :new
+        expect(response).to have_http_status(:success)
+      end
+      after do
+        User.where(username: "rspec").first.destroy
+      end
     end
   end
 
@@ -104,5 +140,4 @@ RSpec.describe WikiPageController, type: :controller do
       end
     end
   end
-
 end
