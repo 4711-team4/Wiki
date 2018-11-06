@@ -2,7 +2,7 @@
 # Contains html content for the wiki page
 
 class WikiPage < ApplicationRecord
-    has_many :revisions
+    has_many :revisions, dependent: :delete_all
     accepts_nested_attributes_for :revisions
 
     def current_revision
