@@ -2,15 +2,26 @@
 <% if user_signed_in? && current_user.admin %>
     <div id="admin-controls">
         <h2>Admin Controls</h2>
-        <%= button_to 'Lock Me?', @page, method: :lock, :class => "waves-effect waves-light btn orange accent-3" %>
+        <% if @page.locked %>
+            <%= button_to 'Unlock Me?', wiki_page_unlock_path(@page), method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
+        <% else %>
+            <%= button_to 'Lock Me?', wiki_page_lock_path, method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
+        <% end %>
         <%= button_to 'Delete Me?', @page, method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
     </div>
 <% end %>
 
 <p>Last updated by <%= @current_revision.user.username %> at <%= @current_revision.updated_at %></p>
+<% if @page.locked %>
+<div id="locked">
+This page has been locked. No further edits will be accepted for this page.
+</div>
+<% end %>
 <%= raw @current_revision.content %>
 
+<% unless @page.locked %>
 <%= button_to 'Edit', edit_wiki_page_path(@page), method: :get %>
+<% end %>
 
 <hr>
 <h2>Previous Versions</h2>

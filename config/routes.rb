@@ -11,4 +11,7 @@ Rails.application.routes.draw do
   get 'test/user'
   get 'test/admin'
   get 'home/index'
+
+  post 'wiki_page/:id/lock', to: 'wiki_page#lock', as: 'wiki_page_lock'
+  post 'wiki_page/:id/unlock', to: 'wiki_page#unlock', as: 'wiki_page_unlock'
 end
