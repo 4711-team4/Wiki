@@ -14,6 +14,7 @@
 //= require activestorage
 //= require turbolinks
 //= require jquery
+//= require ckeditor/init
 //= require_tree .
 
 $(document).on('turbolinks:load', function () {
