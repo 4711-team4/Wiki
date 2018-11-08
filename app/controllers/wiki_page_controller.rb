@@ -24,11 +24,20 @@ class WikiPageController < ApplicationController
   # @!method lets users edit a wiki page
   def edit
     @page = WikiPage.find(params[:id])
+
+    if @page.locked && !authenticate_admin!
+      redirect_to 'home#index'
+    end
   end
 
   # @!method updates a wiki page with some edits
   def update
     @page = WikiPage.find(params[:id])
+
+    if @page.locked && !authenticate_admin
+      head :unauthorized
+    end
+
     if @page.update(wiki_page_params)
       redirect_to @page
     else
@@ -57,6 +66,20 @@ class WikiPageController < ApplicationController
   def destroy
     WikiPage.find(params[:id]).destroy
     redirect_to wiki_page_index_url
+  end
+
+  def lock
+      page = WikiPage.find(params[:id])
+      page.locked = true
+      page.save
+      redirect_to action: :show
+  end
+
+  def unlock
+    page = WikiPage.find(params[:id])
+    page.locked = false
+    page.save
+    redirect_to action: :show
   end
 
   # @!method checks if the form is valid for backend

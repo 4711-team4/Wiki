@@ -5,18 +5,27 @@
 
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= javascript_include_tag 'ckeditor/ckeditor.js' %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
+    <script type="text/javascript">$(document).ready(function() {
+    if ($('textarea').length > 0) {
+        var data = $('textarea');
+        $.each(data, function(i) {
+            CKEDITOR.replace(data[i].id);
+        });
+    }
+});</script>
+
 
     <nav style="margin: 0;">
       <div class="nav-wrapper light-blue darken-4">
         <%= link_to 'WIKI PAGE', {:controller  => "/wiki_page" , :action => :index}, {:class => "brand-logo center"} %>
         <ul id="nav-mobile" class="right hide-on-med-and-down">
-
+          <li><%= link_to "Random", controller: "/wiki_page", action: "random" %></li>
           <% if user_signed_in? %>
             <li><%= link_to "Edit User", edit_user_registration_path %></li>
             <li><%= link_to('Logout', destroy_user_session_path, method: :delete)%></li>
@@ -28,9 +37,19 @@
       </div>
     </nav>
 
-    <div id="flash_messages">
+    <div id="flash_messages" style="position: absolute;right:0px">
       <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, :class => "flash #{key}") %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel orange accent-3" >
+              <div style = "position:relative;">
+                <span class="white-text" >
+                  <%= content_tag(:div, value, :class => "flash #{key}") %>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
 
