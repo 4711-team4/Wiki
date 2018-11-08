@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'admin/block_ip'
   get 'wiki_page/random'
   resources :wiki_page
 
@@ -11,4 +12,7 @@ Rails.application.routes.draw do
   get 'test/user'
   get 'test/admin'
   get 'home/index'
+
+  # routes for admin stuff
+  get 'admin/index'
 end
