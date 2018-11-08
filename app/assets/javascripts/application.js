@@ -19,6 +19,6 @@
 
 $(document).on('turbolinks:load', function () {
     $("#flash_messages").delay(2000).slideUp(500, function () {
-        // $("#flash_messages").alert('close');
+         $("#flash_messages").alert('close');
     });
 });

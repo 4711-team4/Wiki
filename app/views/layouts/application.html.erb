@@ -37,9 +37,19 @@
       </div>
     </nav>
 
-    <div id="flash_messages">
+    <div id="flash_messages" style="position: absolute;right:0px">
       <% flash.each do |key, value| %>
-        <%= content_tag(:div, value, :class => "flash #{key}") %>
+        <div class="row">
+          <div class="col s12">
+            <div class="card-panel orange accent-3" >
+              <div style = "position:relative;">
+                <span class="white-text" >
+                  <%= content_tag(:div, value, :class => "flash #{key}") %>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
       <% end %>
     </div>
 
