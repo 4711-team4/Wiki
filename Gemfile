@@ -28,6 +28,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'bcrypt', '~> 3.1.7'
 # Adding the Materialize responsive framework 
 gem 'materialize-sass'
+gem 'rack-attack'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 
