@@ -6,7 +6,8 @@
 <% if user_signed_in? %>
 <p><strong>YOU ARE SIGNED IN AS <%= current_user.username %>&nbsp;</strong> <%= link_to('Logout', destroy_user_session_path, method: :delete) %></p> 
 <% if current_user.admin %>
-<p><strong>THIS USER HAS ADMIN PRIVLEDGES</strong></p>
+  <p><strong>THIS USER HAS ADMIN PRIVLEDGES</strong></p>
+  <%= link_to "Black List", controller: "admin", action: "index" %>
 <% end %>
 <% end %>
 
@@ -16,4 +17,5 @@
 
 <p><%= link_to "Go to a Random Wiki Page", controller: "wiki_page", action: "random" %></p>
 <p><%= link_to "See a List of all created Wiki pages", controller: "wiki_page", action: "index" %></p>
+
 

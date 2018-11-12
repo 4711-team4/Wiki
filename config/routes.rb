@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     resources :revisions
   end
 
+
+  # routes for admin stuff
+  get 'admin/index'
+  get 'admin/block_ip'
   post 'wiki_page/:id/lock', to: 'wiki_page#lock', as: 'wiki_page_lock'
   post 'wiki_page/:id/unlock', to: 'wiki_page#unlock', as: 'wiki_page_unlock'
   get 'wiki_page/random'

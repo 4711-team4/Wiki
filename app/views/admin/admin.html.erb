@@ -1,0 +1,21 @@
+<h2># This is the admin page</h2>
+
+<h4> Banned IP addresses </h4>
+<% @list.each do |ip| %>
+  <p><%= ip %></p>
+<% end %>
+
+<h4>User's ip addresses</h4>
+<%= form_tag(admin_block_ip_url, method: :get) do %>
+  <% @user_ips.each do |user| %>
+    <% unless @black_list.is_blacklisted? user.last_sign_in_ip %>
+      <p>
+        <label>
+          <%= check_box_tag 'ip_addresses', user.last_sign_in_ip, false  %>
+          <span><%= "#{user.email} ip address: #{user.last_sign_in_ip}" %></span>
+        </label>
+      </p>
+    <% end %>
+  <% end %>
+  <%= submit_tag 'Block Ips' %>
+<% end %>
