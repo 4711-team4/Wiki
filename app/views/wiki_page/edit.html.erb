@@ -7,10 +7,13 @@
   <%= form.label :Content %>
   <%= form.text_area :content %>
   <br/>
-  <%= form.submit 'Update Page' %>
+  <p>
+    <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">Update Page
+    </button>
+  </p>
 <% end %>
 
-<%= link_to 'Back', wiki_page_index_url %>
+<%= button_to 'Back', wiki_page_index_url, method: :get, class: "waves-effect waves-light btn blue accent-4"%>
 
 
 
