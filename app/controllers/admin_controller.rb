@@ -19,6 +19,16 @@ class AdminController < ApplicationController
     redirect_to :action => 'index'
   end
 
+  def unblock_ip
+    if @black_list.is_blacklisted? params[:ip_addresses]
+      @black_list.remove_ip params[:ip_addresses]
+      @black_list.save_list
+    else
+      flash[:error] = 'That ip is not banned'
+    end
+    redirect_to :action => 'index'
+  end
+
   def setup_blacklist
     @black_list = Blacklist.new true
   end

@@ -1,8 +1,16 @@
 <h2># This is the admin page</h2>
-
 <h4> Banned IP addresses </h4>
-<% @list.each do |ip| %>
-  <p><%= ip %></p>
+<%= form_tag(admin_unblock_ip_url, method: :get) do %>
+  <% @list.each do |ip| %>
+    <p>
+      <label>
+        <%= check_box_tag 'ip_addresses', ip, false %>
+        <span><%= ip %></span>
+      </label>
+    </p>
+
+  <% end %>
+  <%= submit_tag 'unblock ip' %>
 <% end %>
 
 <h4>User's ip addresses</h4>
@@ -10,12 +18,18 @@
   <% @user_ips.each do |user| %>
     <% unless @black_list.is_blacklisted? user.last_sign_in_ip %>
       <p>
-        <label>
-          <%= check_box_tag 'ip_addresses', user.last_sign_in_ip, false  %>
-          <span><%= "#{user.email} ip address: #{user.last_sign_in_ip}" %></span>
-        </label>
+          <label>
+            <%=  check_box_tag 'ip_addresses', user.last_sign_in_ip, false  %>
+            <span><%= "#{user.email} ip address: #{user.last_sign_in_ip}" %></span>
+          </label>
       </p>
-    <% end %>
+    <%  end %>
   <% end %>
   <%= submit_tag 'Block Ips' %>
+<% end %>
+
+<% if flash[:error] != nil %>
+  <script>
+    M.Toast({html: <%= flash[:error] %>, duration: 200 });
+  </script>
 <% end %>
