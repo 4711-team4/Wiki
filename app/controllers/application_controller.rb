@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
     true
   end
 
+  def user_banned!
+    # write some stuff that checks if the user is banned
+    request.remote_ip # check it with a list of bad users
+
+  end
+
   protected
 
   def configure_permitted_parameters

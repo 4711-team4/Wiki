@@ -1,19 +1,19 @@
 <h1><%= @current_revision.title %></h1>
 <% if user_signed_in? && current_user.admin %>
-    <div class="row">
+  <div class="row">
     <div class="col s12 m6">
       <div class="card grey lighten-2">
         <div class="card-content black-text">
           <span class="card-title">Admin Controls</span>
           <p>
-          <div style="display: flex; flex-direction: row; justify-content:space-evenly">
-          <% if @page.locked %>
-            <%= button_to 'Unlock Me?', wiki_page_unlock_path(@page), method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
-          <% else %>
-            <%= button_to 'Lock Me?', wiki_page_lock_path, method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
-          <% end %>
-          <%= button_to 'Delete Me?', @page, method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
-          </div>
+            <div style="display: flex; flex-direction: row; justify-content:space-evenly">
+              <% if @page.locked %>
+                <%= button_to 'Unlock Page', wiki_page_unlock_path(@page), method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
+              <% else %>
+                <%= button_to 'Lock Page', wiki_page_lock_path, method: :post, :class => "waves-effect waves-light btn orange accent-3" %>
+              <% end %>
+              <%= button_to 'Delete Page', @page, method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
+            </div>
           </p>
         </div>
       </div>
@@ -23,36 +23,35 @@
 
 <p>Last updated by <%= @current_revision.user.username %> at <%= @current_revision.updated_at %></p>
 <% if @page.locked && (!user_signed_in? || !current_user.admin) %>
-    <div class="row">
-        <div class="col s12">
-            <div class="card-panel red">
-            <span class="white-text">
-                This page has been locked. No further edits will be accepted for this page.
-            </span>
-            </div>
-        </div>
-    </div>
+  <div class="row">
+      <div class="col s12">
+          <div class="card-panel red">
+          <span class="white-text">
+              This page has been locked. No further edits will be accepted for this page.
+          </span>
+          </div>
+      </div>
+  </div>
 <% end %>
 <%= raw @current_revision.content %>
 
 <% unless @page.locked && (!user_signed_in? || !current_user.admin) %>
-<%= button_to 'Edit', edit_wiki_page_path(@page), method: :get, class: "waves-effect waves-light btn orange accent-3" %>
+  <%= button_to 'Edit', edit_wiki_page_path(@page), method: :get,  :class => "waves-effect waves-light btn orange accent-3" %>
 <% end %>
 
 <hr>
-
-<h5>Previous Versions</h5>
+<h2>Previous Versions</h2>
 <table>
+  <tr>
+    <th>Created at</td>
+    <th>User</td>
+    <th></th>
+  </tr>
+  <% @revisions.each do |revision| %>
     <tr>
-        <th>Created at</td>
-        <th>User</td>
-        <th></th>
+      <td><%= revision.updated_at %></td>
+      <td><%= revision.user.username %></td>
+      <td><%= link_to "View this version", wiki_page_revision_path(revision) %></td>
     </tr>
-    <% @revisions.each do |revision| %>
-        <tr>
-            <td><%= revision.updated_at %></td>
-            <td><%= revision.user.username %></td>
-            <td><%= link_to "View this version", "#" %></td>
-        </tr>
-    <% end %>
+  <% end %>
 </table>

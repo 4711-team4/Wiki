@@ -8,7 +8,7 @@ class Blacklist
   def initialize(load_list)
     @list_loaded = load_list
     @list = Array.new
-    File.open(@@file_location,'w') unless File.exist?(@@file_location)
+    File.open(@@file_location,'w') unless File.exist?(@@file_location) # create the blacklist file if it isn't there
     reload_list if load_list
   end
 
@@ -22,7 +22,7 @@ class Blacklist
   end
 
   def is_blacklisted?(ip)
-    @list.index(ip) != nil
+    @list.include? ip
   end
 
   def reload_list
