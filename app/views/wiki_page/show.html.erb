@@ -36,11 +36,12 @@
 <%= raw @current_revision.content %>
 
 <% unless @page.locked && (!user_signed_in? || !current_user.admin) %>
-<%= button_to 'Edit', edit_wiki_page_path(@page), method: :get %>
+<%= button_to 'Edit', edit_wiki_page_path(@page), method: :get, class: "waves-effect waves-light btn orange accent-3" %>
 <% end %>
 
 <hr>
-<h2>Previous Versions</h2>
+
+<h5>Previous Versions</h5>
 <table>
     <tr>
         <th>Created at</td>
