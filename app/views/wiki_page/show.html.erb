@@ -51,7 +51,7 @@
     <tr>
       <td><%= revision.updated_at %></td>
       <td><%= revision.user.username %></td>
-      <td><%= link_to "View this version", wiki_page_revision_path(revision) %></td>
+      <td><%= link_to "View this version", wiki_page_revision_path(revision.wiki_page, revision) %></td>
     </tr>
   <% end %>
 </table>
