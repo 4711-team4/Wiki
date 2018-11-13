@@ -2,12 +2,10 @@
 
 <% if @pages.blank? %>
   <p><strong> No Wiki pages on the site :(</strong></p>
-  <%#= link_to 'Would you like to create one', action: 'new' %>
-
 <% end %>
 
 <% @pages.each do |page|%>
   <%= link_to page.current_revision.title, wiki_page_path(page) %><br>
 <% end %>
 
-<%= button_to 'Create a new page?', new_wiki_page_path, method: :get, class: "waves-effect waves-light btn orange accent-3"%>
+<%= button_to 'Create a new page', new_wiki_page_path, method: :get, class: "waves-effect waves-light btn orange accent-3"%>

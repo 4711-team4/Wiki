@@ -1,0 +1,31 @@
+<h1><%= @revision.title %></h1>
+<div class="row">
+    <div class="col s12">
+        <div class="card-panel grey lighten-2">
+            <span class="black-text">
+                You are viewing an older version of this page.
+            </span>
+            <div class="card-action">
+                <%= link_to 'View Current Version', wiki_page_path(@page) %>
+            </div>
+        </div>
+    </div>
+</div>
+<% if user_signed_in? && current_user.admin %>
+  <div class="row">
+    <div class="col s12 m6">
+      <div class="card grey lighten-2">
+        <div class="card-content black-text">
+          <span class="card-title">Admin Controls</span>
+          <p>
+            <div style="display: flex; flex-direction: row; justify-content:space-evenly">
+              <%= button_to 'Delete This Revision', wiki_page_revision_path(@revision), method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<p>Created by <%= @revision.user.username %> at <%= @revision.updated_at %></p>
+<%= raw @revision.content %>
