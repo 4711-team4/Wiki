@@ -47,11 +47,16 @@
     <th>User</td>
     <th></th>
   </tr>
-  <% @revisions.each do |revision| %>
+  <% @revisions.reverse.each do |revision| %>
     <tr>
       <td><%= revision.updated_at %></td>
       <td><%= revision.user.username %></td>
-      <td><%= link_to "View this version", wiki_page_revision_path(revision.wiki_page, revision) %></td>
+      <td>
+        <% if revision == @page.current_revision %>
+          Current Version
+        <% else %>
+          <%= link_to "View this version", wiki_page_revision_path(revision.wiki_page, revision) %></td>
+        <% end %>
     </tr>
   <% end %>
 </table>

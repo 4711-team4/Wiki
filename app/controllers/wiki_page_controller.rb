@@ -1,6 +1,6 @@
 # Lets user interact with wiki pages
 class WikiPageController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :edit]
+  before_action :authenticate_user!, only: [:new, :create, :edit, :update]
   before_action :authenticate_admin!, only: :destroy
 
   # @!method redirects the user to a random page
@@ -34,11 +34,14 @@ class WikiPageController < ApplicationController
   def update
     @page = WikiPage.find(params[:id])
 
-    if @page.locked && !authenticate_admin
+    if @page.locked && !authenticate_admin!
       head :unauthorized
     end
 
-    if @page.update(wiki_page_params)
+    @page.assign_attributes(wiki_page_params)
+    @page.revisions.last.user = current_user
+
+    if @page.save
       redirect_to @page
     else
       flash[:error] = 'Could not save your changes' # let the user know about the error

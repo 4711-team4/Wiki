@@ -19,7 +19,7 @@
           <span class="card-title">Admin Controls</span>
           <p>
             <div style="display: flex; flex-direction: row; justify-content:space-evenly">
-              <%= button_to 'Delete This Revision', wiki_page_revision_path(@revision), method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
+              <%= button_to 'Delete This Revision', wiki_page_revision_path(@revision.wiki_page, @revision), method: :delete, :class => "waves-effect waves-light btn red accent-3" %>
             </div>
           </p>
         </div>

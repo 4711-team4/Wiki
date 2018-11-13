@@ -1,19 +1,18 @@
-<h1>WikiPage#edit</h1>
+<h1>Edit Page</h1>
 
-<%= form_with(model: @page) do |form| %>
-  <%= form.label :title %>
-  <%= form.text_field :title  %>
-  <br/>
-  <%= form.label :Content %>
-  <%= form.text_area :content %>
-  <br/>
-  <p>
-    <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">Update Page
-    </button>
-  </p>
+<%= form_for @page do |form| %>
+  <%= form.fields_for :revisions, @page.current_revision.dup do |ff| %>
+    <div>
+      <%= ff.label :title %>
+      <%= ff.text_field :title %>
+
+      <%= ff.label :content %>
+      <%= ff.text_field :content %>
+    </div>
+  <% end %>
+
+  <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">Update Page</button>
 <% end %>
 
 <%= button_to 'Back', wiki_page_index_url, method: :get, class: "waves-effect waves-light btn blue accent-4"%>
-
-
 
