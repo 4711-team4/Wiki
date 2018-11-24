@@ -1,3 +1,7 @@
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
+  </head>
 <h1>Edit Page</h1>
 
 <%= form_for @page do |form| %>
@@ -7,11 +11,47 @@
       <%= ff.text_field :title %>
 
       <%= ff.label :content %>
-      <%= ff.text_field :content %>
+      <%= ff.text_field :content, id: "editor1" %>
+
+
+      <textarea name="content" id="editor">Click Fill Editor Button Below!</textarea>
+
+    <script>
+      let editor;
+      ClassicEditor
+        .create( document.querySelector( '#editor' ), {
+            cloudServices: {
+              tokenUrl: 'https://36001.cke-cs.com/token/dev/AnjGac7d1O2H6D9i4B3VteXwt76XanuPf69L5rqzcdJ8zrOLcktEMAD0i5Iu',
+              uploadUrl: 'https://36001.cke-cs.com/easyimage/upload/'
+            }
+        } )
+        .then( NewEditor => {
+          editor = NewEditor;
+        } )
+        .catch( error => {
+          console.error( error );
+        } );
+
+      function updateThing() {
+        var text = document.getElementById('editor1');
+        text.value = editor.getData();
+      }
+
+      function addtext() {
+        var text = document.getElementById('editor1');
+        editor.setData(text.value);
+      }
+
+    </script>
+    <input id="clickMe" type="button" value="Fill Editor" onclick="addtext();" />
+
+
     </div>
   <% end %>
 
-  <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">Update Page</button>
+
+
+  <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action" onclick="updateThing();">Update Page</button>
 <% end %>
 
 <%= button_to 'Back', wiki_page_index_url, method: :get, class: "waves-effect waves-light btn blue accent-4"%>
