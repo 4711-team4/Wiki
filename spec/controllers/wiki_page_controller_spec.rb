@@ -23,7 +23,7 @@ RSpec.describe WikiPageController, type: :controller do
       it "redirect to list" do
         get :random
         if WikiPage.all.blank?
-          expect(response).to redirect_to(:wiki_page_index)
+          expect(response).to redirect_to(:wiki_page_index).or redirect_to(:root)
         else
           fail 'There are wiki pages in the database'
         end
