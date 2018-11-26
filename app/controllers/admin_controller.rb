@@ -1,6 +1,7 @@
 require 'blacklist'
 class AdminController < ApplicationController
   before_action :setup_blacklist
+  before_action :authenticate_admin!
 
   def index
     @list = @black_list.all_banned_ip
