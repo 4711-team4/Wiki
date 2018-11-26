@@ -10,8 +10,7 @@
       <%= ff.label :title %>
       <%= ff.text_field :title %>
 
-      <%= ff.label :content %>
-      <%= ff.text_field :content, id: "editor1" %>
+      <%= ff.hidden_field :content, id: "editor1" %>
 
 
       <textarea name="content" id="editor">Click Fill Editor Button Below!</textarea>
@@ -27,6 +26,7 @@
         } )
         .then( NewEditor => {
           editor = NewEditor;
+          addtext();
         } )
         .catch( error => {
           console.error( error );
@@ -43,13 +43,8 @@
       }
 
     </script>
-    <input id="clickMe" type="button" value="Fill Editor" onclick="addtext();" />
-
-
     </div>
   <% end %>
-
-
 
   <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action" onclick="updateThing();">Update Page</button>
 <% end %>
