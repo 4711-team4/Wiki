@@ -4,11 +4,11 @@ Rails.application.routes.draw do
   
   devise_for :users
   
-  root to: 'home#index'
+  root to: 'wiki_page#index'
   
   get 'test/user'
   get 'test/admin'
-  get 'home/index'
+  # get 'home/index'
   
   get 'wiki_page/random'
   post 'wiki_page/:id/lock', to: 'wiki_page#lock', as: 'wiki_page_lock'
