@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+
+ /* Override weird Materialize rules that makes <ul> not work */
+ .container ul {
+     padding-left: 40px !important;
+     list-style-type: disc !important;
+ }
+
+ .container ul > li {
+     list-style-type: disc !important;
+ }
