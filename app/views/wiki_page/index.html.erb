@@ -4,8 +4,12 @@
   <p><strong> No Wiki pages on the site :(</strong></p>
 <% end %>
 
-<% @pages.each do |page|%>
-  <%= link_to page.current_revision.title, wiki_page_path(page) %><br>
-<% end %>
+<p>
+  <% @pages.each do |page|%>
+    <%= link_to page.current_revision.title, wiki_page_path(page) %><br>
+  <% end %>
+</p>
 
-<%= button_to 'Create a new page', new_wiki_page_path, method: :get, class: "waves-effect waves-light btn orange accent-3"%>
+<p>
+  <%= button_to 'Create a new page', new_wiki_page_path, method: :get, class: "waves-effect waves-light btn orange accent-3"%>
+</p>
