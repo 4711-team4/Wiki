@@ -1,4 +1,4 @@
-<h2>Forgot your password?</h2>
+<h2>Forgot Your Password?</h2>
 
 <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
   <%= devise_error_messages! %>
@@ -10,7 +10,8 @@
 
   <div class="actions">
     <p>
-      <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">Send me reset password instructions
+      <button class="waves-effect waves-light btn orange accent-3" type="submit" name="action">
+        Send me password reset instructions
       </button>
     </p>
   </div>
