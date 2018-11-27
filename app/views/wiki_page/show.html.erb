@@ -1,4 +1,4 @@
-<h1><%= @current_revision.title %></h1>
+<h2><%= @current_revision.title %></h2>
 <% if user_signed_in? && current_user.admin %>
   <div class="row">
     <div class="col s12 m6">
@@ -21,7 +21,7 @@
   </div>
 <% end %>
 
-<p>Last updated by <%= @current_revision.user.username %> at <%= @current_revision.updated_at %></p>
+<h6>Last updated by <%= @current_revision.user.username %> at <%= @current_revision.updated_at %></h6>
 <% if @page.locked && (!user_signed_in? || !current_user.admin) %>
   <div class="row">
       <div class="col s12">
@@ -35,11 +35,15 @@
 <% end %>
 <%= raw @current_revision.content %>
 
+<hr>
 <% unless @page.locked && (!user_signed_in? || !current_user.admin) %>
-  <%= button_to 'Edit', edit_wiki_page_path(@page), method: :get,  :class => "waves-effect waves-light btn orange accent-3" %>
+  <p>
+    <%= button_to 'Edit', edit_wiki_page_path(@page),
+                  method: :get,  :class => "waves-effect waves-light btn orange accent-3" %>
+  </p>
 <% end %>
 
-<hr>
+<br/>
 <h5>Previous Versions</h5>
 <table>
   <tr>
