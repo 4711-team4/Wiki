@@ -1,8 +1,9 @@
 <head>
-    <meta charset="utf-8">
-    <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
-  </head>
-<h1>Edit Page</h1>
+  <meta charset="utf-8">
+  <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
+</head>
+
+<h2>Edit Page</h2>
 
 <%= form_for @page do |form| %>
   <%= form.fields_for :revisions, @page.current_revision.dup do |ff| %>
