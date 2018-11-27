@@ -13,7 +13,7 @@ class Blacklist
   end
 
   def add_ip(ip)
-    @list.push(ip)
+	  @list.push(ip.chomp("\n"))
   end
 
   #@!method will return nil if nothing was deleted
@@ -34,6 +34,9 @@ class Blacklist
   end
 
   def all_banned_ip
+	  while @list.include? "\n" 
+		  @list.delete("\n")
+	 end
     @list
   end
 
