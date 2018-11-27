@@ -1,13 +1,15 @@
-<h1>Page Listing</h1>
+<h2>Page Listing</h2>
 
 <% if @pages.blank? %>
   <p><strong> No Wiki pages on the site :(</strong></p>
 <% end %>
 
 <p>
-  <% @pages.each do |page|%>
-    <%= link_to page.current_revision.title, wiki_page_path(page) %><br>
-  <% end %>
+  <div class="collection">
+    <% @pages.each do |page|%>
+      <li class="collection-item"><%= link_to page.current_revision.title, wiki_page_path(page) %></li>
+    <% end %>
+  </div>
 </p>
 
 <p>
