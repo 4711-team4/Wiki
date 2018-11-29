@@ -5,10 +5,13 @@
 <% end %>
 
 <p>
+  <input type="text" id="searchInput" onkeyup="filterList()" placeholder="Search page titles...">
   <div class="collection">
-    <% @pages.each do |page|%>
-      <li class="collection-item"><%= link_to page.current_revision.title, wiki_page_path(page) %></li>
-    <% end %>
+    <ul id="wikiPages" style="padding-left: 0 !important; list-style-type: none !important; margin: 0">
+      <% @pages.each do |page|%>
+       <li class="collection-item"><%= link_to page.current_revision.title, wiki_page_path(page) %></li>
+      <% end %>
+    </ul>      
   </div>
 </p>
 
