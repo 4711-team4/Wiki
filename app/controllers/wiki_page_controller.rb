@@ -40,7 +40,7 @@ class WikiPageController < ApplicationController
 
     @page.assign_attributes(wiki_page_params)
     @page.revisions.last.user = current_user
-
+    parse_images params[:content]
     if @page.save
       redirect_to @page
     else
@@ -89,4 +89,25 @@ class WikiPageController < ApplicationController
   def wiki_page_params
     params.require(:wiki_page).permit(:locked, revisions_attributes: [:title, :content])
   end
+
+
+  def parse_images(content)
+    wiki_content = Nokogiri::HTML(content)
+    images = wiki_content.css('img')
+    images.each do |img|
+      unless image_in_page?(img['src'], @page)
+        image = Image.new(wiki_page_id: @page.id, user: current_user, location: img['src'])
+        image.upload_date = DateTime.now
+        image.save
+      end
+    end
+  end
+
+  def image_in_page?(image, page)
+    page.images.each do|img|
+      return true if img.location == image
+    end
+    false
+  end
+
 end
