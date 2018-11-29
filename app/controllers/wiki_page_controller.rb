@@ -44,7 +44,7 @@ class WikiPageController < ApplicationController
     if @page.save
       redirect_to @page
     else
-      flash[:error] = 'Could not save your changes' # let the user know about the error
+      flash[:error] = @page.errors.full_messages.to_sentence
       render 'edit'
     end
   end
@@ -58,7 +58,12 @@ class WikiPageController < ApplicationController
   def create
     @page = WikiPage.new(wiki_page_params)
     @page.revisions.last.user = current_user
-    redirect_to @page if @page.save!
+    if @page.save
+      redirect_to @page
+    else
+      flash[:error] = @page.errors.full_messages.to_sentence
+      render 'new'
+    end
   end
 
   # @!method list all wiki pages created
