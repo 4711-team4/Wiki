@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   def authenticate_admin!
     unless authenticate_user! && current_user.admin
       flash[:error] = "You are not authorized to view that page"
-      redirect_to controller: :home, action: :index
+      redirect_to controller: :wiki_page, action: :index
     end
     true
   end

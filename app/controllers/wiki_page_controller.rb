@@ -26,7 +26,7 @@ class WikiPageController < ApplicationController
     @page = WikiPage.find(params[:id])
 
     if @page.locked && !authenticate_admin!
-      redirect_to 'home#index'
+      redirect_to 'wiki_page#index'
     end
   end
 
