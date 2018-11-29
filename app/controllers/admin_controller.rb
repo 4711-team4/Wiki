@@ -21,12 +21,12 @@ class AdminController < ApplicationController
   end
 
   def unblock_ip
-    if @black_list.is_blacklisted? params[:ip_addresses]
-      @black_list.remove_ip params[:ip_addresses]
-      @black_list.save_list
-    else
-      flash[:error] = 'That ip is not banned'
-    end
+    @black_list.all_banned_ip.each do |banned_ip|
+      if banned_ip.include? params[:ip_addresses].strip
+          @black_list.remove_ip banned_ip
+          @black_list.save_list
+        end
+      end
     redirect_to :action => 'index'
   end
 

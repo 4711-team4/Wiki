@@ -34,7 +34,7 @@ class Blacklist
   end
 
   def all_banned_ip
-	  while @list.include? "\n" 
+	  while @list.include? "\n"
 		  @list.delete("\n")
 	 end
     @list

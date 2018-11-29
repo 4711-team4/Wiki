@@ -35,7 +35,7 @@ describe 'Removing Ips from the black list' do
       black_list = Blacklist.new true
       original_size = black_list.all_banned_ip.size
       black_list.remove_ip('1.1.1.1')
-     # expect(black_list.all_banned_ip.size).to_not eq original_size
+      expect(black_list.all_banned_ip.size).to_not eq original_size
     end
   end
 end
