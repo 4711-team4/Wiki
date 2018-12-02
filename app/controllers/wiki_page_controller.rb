@@ -95,6 +95,7 @@ class WikiPageController < ApplicationController
     params.require(:wiki_page).permit(:locked, revisions_attributes: [:title, :content])
   end
 
+  private :parse_images, :image_removed_from_page?, :image_in_page?, :delete_images_if_removed
 
   def parse_images(content)
     wiki_content = Nokogiri::HTML(content)
@@ -106,6 +107,7 @@ class WikiPageController < ApplicationController
         image.save
       end
     end
+    delete_images_if_removed images
   end
 
   def image_in_page?(image, page)
@@ -113,6 +115,21 @@ class WikiPageController < ApplicationController
       return true if img.location == image
     end
     false
+  end
+
+  def image_removed_from_page?(image, img_links)
+    img_links.each do |img|
+      return false if image.location == img['src']
+    end
+    true
+  end
+
+  def delete_images_if_removed(imgs)
+    unless imgs.size == @page.images.size
+      @page.images.each do |model|
+        model.delete if image_removed_from_page?(model, imgs)
+      end
+    end
   end
 
 end
