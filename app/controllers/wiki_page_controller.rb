@@ -94,8 +94,7 @@ class WikiPageController < ApplicationController
   def wiki_page_params
     params.require(:wiki_page).permit(:locked, revisions_attributes: [:title, :content])
   end
-
-  private :parse_images, :image_removed_from_page?, :image_in_page?, :delete_images_if_removed
+  
 
   def parse_images(content)
     wiki_content = Nokogiri::HTML(content)
