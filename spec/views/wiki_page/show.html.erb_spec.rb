@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe "wiki_page/show.html.erb", type: :view do
   fake_page = nil
   before do
+    WikiPage.destroy_all
+    User.destroy_all
     user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
     fake_page = WikiPage.create(locked: false)
-    fake_page.revisions.new(title: "Title", content: "This is the content", user: user).save
+    fake_page.revisions.new(title: "Title", content: "This is the content", user: user).save!
     revisions = fake_page.revisions.all.sort_by{|revision| revision.created_at}
     current_revision = revisions.last
     assign(:page, fake_page)
