@@ -33,7 +33,7 @@
       </div>
   </div>
 <% end %>
-<%= raw @current_revision.content %>
+<%= raw add_image_links_to_content @current_revision %>
 
 <hr>
 <% unless @page.locked && (!user_signed_in? || !current_user.admin) %>
