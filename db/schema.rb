@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_24_145552) do
+ActiveRecord::Schema.define(version: 2018_11_29_221959) do
+
+  create_table "admins", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_admins_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_admins_on_reset_password_token", unique: true
+  end
 
   create_table "ckeditor_assets", force: :cascade do |t|
     t.string "data_file_name", null: false
@@ -23,6 +35,19 @@ ActiveRecord::Schema.define(version: 2018_11_24_145552) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["type"], name: "index_ckeditor_assets_on_type"
+  end
+
+  create_table "images", force: :cascade do |t|
+    t.datetime "upload_date"
+    t.integer "width"
+    t.integer "height"
+    t.integer "wiki_page_id"
+    t.integer "size"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "location"
+    t.integer "user_id"
+    t.index ["wiki_page_id"], name: "index_images_on_wiki_page_id"
   end
 
   create_table "revisions", force: :cascade do |t|
