@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8">
-  <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/classic/ckeditor.js"></script>
+  <script src="https://cdn.ckeditor.com/ckeditor5/11.1.1/decoupled-document/ckeditor.js"></script>
 </head>
 
 <h2>Edit Page</h2>
@@ -11,14 +11,18 @@
       <%= ff.label :title %>
       <%= ff.text_field :title %>
 
+      <div id="toolbar-container"></div>
+      <div id="editor">
+          <p>This is the initial editor content.</p>
+      </div>
       <%= ff.hidden_field :content, id: "editor1" %>
 
 
-      <textarea name="content" id="editor">Click Fill Editor Button Below!</textarea>
+      <textarea name="content" id="editor2">Click Fill Editor Button Below!</textarea>
 
     <script>
       let editor;
-      ClassicEditor
+      DecoupledEditor
         .create( document.querySelector( '#editor' ), {
             cloudServices: {
               tokenUrl: 'https://36001.cke-cs.com/token/dev/AnjGac7d1O2H6D9i4B3VteXwt76XanuPf69L5rqzcdJ8zrOLcktEMAD0i5Iu',
@@ -27,6 +31,8 @@
         } )
         .then( NewEditor => {
           editor = NewEditor;
+          const toolbarContainer = document.querySelector( '#toolbar-container' );
+          toolbarContainer.appendChild( editor.ui.view.toolbar.element );
           addtext();
         } )
         .catch( error => {
