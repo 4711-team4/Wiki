@@ -8,7 +8,7 @@ module WikiPageHelper
       model = page.wiki_page.images.where("location = '#{img['src']}'")
       # create the link
       link = Nokogiri::XML::Node.new 'a', content
-      link['href'] = "/images/#{model.ids[0]}" # find a way to include rails route functions
+      link['href'] = "/image/#{model.ids[0]}" # find a way to include rails route functions
       img.add_next_sibling link
       img.parent = link
     end

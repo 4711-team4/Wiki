@@ -40,7 +40,7 @@ class WikiPageController < ApplicationController
 
     @page.assign_attributes(wiki_page_params)
     @page.revisions.last.user = current_user
-    parse_images params[:content]
+    parse_images params[:wiki_page][:revisions_attributes]["0"][:content]
     if @page.save
       redirect_to @page
     else
@@ -59,6 +59,7 @@ class WikiPageController < ApplicationController
     @page = WikiPage.new(wiki_page_params)
     @page.revisions.last.user = current_user
     if @page.save
+      parse_images params[:wiki_page][:revisions_attributes]["0"][:content]
       redirect_to @page
     else
       flash[:error] = @page.errors.full_messages.to_sentence

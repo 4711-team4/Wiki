@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :revisions
   end
 
+  resources :image, only: [:show]
+
 
   # routes for admin stuff
   get 'admin/index'
