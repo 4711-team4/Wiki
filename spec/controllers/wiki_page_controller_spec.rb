@@ -5,6 +5,7 @@ def create_temp_page
   wiki_page = WikiPage.create(locked: false)
   wiki_page.revisions.new(title: "Hello", content: "world", user: user).save!
   wiki_page.save
+  return wiki_page
 end
 
 def delete_temp_page
@@ -19,105 +20,107 @@ end
 RSpec.describe WikiPageController, type: :controller do
 
   describe "GET #random" do
-    context "Database is empty" do
-      it "redirect to list" do
-        get :random
-        if WikiPage.all.blank?
-          expect(response).to redirect_to(:wiki_page_index).or redirect_to(:root)
-        else
-          fail 'There are wiki pages in the database'
-        end
-      end
+    before do
     end
-    context 'Database has pages' do
-      before do
-        create_temp_page()
-      end
-      it 'should redirect to a random page' do
-        get :random
-        page = WikiPage.all.first
-        expect(response).to redirect_to(page)
-      end
-      after do
-        delete_temp_page()
-      end
+    it 'should redirect to a random page' do
+      WikiPage.destroy_all
+      get :random
+      expect(response).to redirect_to(:wiki_page_index).or redirect_to(:root)
+      @page = create_temp_page
+      get :random
+      expect(response).to redirect_to(@page)
+    end
+    after do
+      @page.destroy
+      User.where(username: "rspec").first.destroy
     end
   end
 
   describe "GET #show" do
     before do
-      create_temp_page
+      @page = create_temp_page
     end
     it "returns http success" do
-      page = WikiPage.all.first
-      get :show, :params => {id: page.id}
+      get :show, :params => {id: @page.id}
       expect(response).to have_http_status(:success)
     end
     after do
-      delete_temp_page
+      @page.destroy
+      User.where(username: "rspec").first.destroy
     end
   end
 
   describe "GET #edit" do
     context "when no user is signed in" do
       before do
-        create_temp_page
+        @page = create_temp_page
       end
       it "returns 302 found" do
-        page = WikiPage.all.first
-        get :edit, :params => {id: page.id}
+        get :edit, :params => {id: @page.id}
         expect(response).to have_http_status(:found)
       end
       after do
-        delete_temp_page
+        @page.destroy
+        User.where(username: "rspec").first.destroy
       end
     end
     context "when a user is signed in" do
       before do
-        create_temp_page
+        @page = create_temp_page
         user = User.where(username: "rspec").first
-        sign_in user
+        controller.sign_in user
       end
       it "returns http success" do
-        page = WikiPage.all.first
-        get :edit, :params => {id: page.id}
+        get :edit, :params => {id: @page.id}
         expect(response).to have_http_status(:success)
       end
       after do
-        delete_temp_page
+        @page.destroy
+        User.where(username: "rspec").first.destroy
       end
     end
   end
 
-  describe "GET #update" do
+  describe "PUT #update/:id" do
+    content = "New Content <img src='https://1.bp.blogspot.com/-8LKoU28XlQM/UqpDSu-r2DI/AAAAAAAABzQ/pbhGxkgTZNE/s1600/Great+Job+gold+star.png'/>"
+    let(:attr) do 
+      { :revisions_attributes => {"0" => {:title => 'New title', :content => content } } }
+    end
+  
+    before do
+      user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
+      controller.sign_in user
+      @page = create_temp_page
+      put :update, params: {:id => @page.id, :wiki_page => attr}
+      @page.reload
+    end
+  
+    it { expect(response).to redirect_to(@page) }
+    it { expect(@page.current_revision.title).to eq 'New title' }
+    it { expect(@page.current_revision.content).to eq content }
+    it {expect(@page.images.size).not_to be 0}
+    it {expect(@page.images[0].location).to eq 'https://1.bp.blogspot.com/-8LKoU28XlQM/UqpDSu-r2DI/AAAAAAAABzQ/pbhGxkgTZNE/s1600/Great+Job+gold+star.png' }
   end
 
   describe "POST #create" do
-    # it 'should create a wiki page' do
-    #   title = 'Hello World!'
-    #   content = '<h2> Whats going on? </h2>'
-    #   post :update, params: {:wiki_page => {title: title, content: content}}
-    #
-    #   page = WikiPage.all.first
-    #   expect(page.title).to eq(title)
-    #   expect(page.content).to eq(content)
-    #   expect(response).to redirect_to(page)
-    # end
+    let(:attr) do 
+      { :revisions_attributes => {"0" => {:title => 'New title', :content => 'New Content' } } }
+    end
+
+    it "creates a new page" do
+      user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
+      controller.sign_in user
+      expect { post :create, params: {:wiki_page => attr} }.to change(WikiPage, :count).by(1) 
+    end
   end
 
   describe "GET #new" do
-    context "when no user is signed in" do
-      it "returns http found" do
+    context "when a user is signed in" do
+      it "returns http success" do
         get :new
         expect(response).to have_http_status(:found)
-      end
-    end
-    context "when a user is signed in" do
-      before do
         user = User.create(email: "rspec@example.com", username: "rspec", password: "password")
-        sign_in user
-      end
-      it "returns http success" do
+        controller.sign_in user
         get :new
         expect(response).to have_http_status(:success)
       end
@@ -133,6 +136,7 @@ RSpec.describe WikiPageController, type: :controller do
       expect(response).to have_http_status(:success)
     end
     context "No Pages in the list" do
+      WikiPage.destroy_all
       render_views
       it "Shows a no article message" do
         get :index

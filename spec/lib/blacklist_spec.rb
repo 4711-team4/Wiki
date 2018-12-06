@@ -24,6 +24,30 @@ describe 'Saving IPs to blacklist' do
   end
 end
 
+describe 'If newline characters found' do
+  it 'Should remove the newlines' do
+   list= Blacklist.new true
+   if list.return_list.include? "\n"
+      expect(list.all_banned_ip.include? ("\n")).not_to eq true
+    else
+      list.return_list.push("\n")
+      list.return_list.push("\n")
+      expect(list.all_banned_ip.include? ("\n")).not_to eq true
+   end
+  end
+end
+
+
+describe 'Updates in list' do
+ it 'should update the file' do
+   list= Blacklist.new true
+   list.save_list
+   list.return_list.each do |item|
+   expect((File.read(Rails.root.join('config/blacklist'))).include? item).to eq true
+ end
+ end
+end
+
 describe 'Removing Ips from the black list' do
   context 'there is an ip in the blacklist file' do
     black_list = Blacklist.new true
@@ -39,4 +63,3 @@ describe 'Removing Ips from the black list' do
     end
   end
 end
-
