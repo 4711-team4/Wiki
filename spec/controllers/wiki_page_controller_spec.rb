@@ -82,8 +82,9 @@ RSpec.describe WikiPageController, type: :controller do
   end
 
   describe "PUT #update/:id" do
+    content = "New Content <img src='https://1.bp.blogspot.com/-8LKoU28XlQM/UqpDSu-r2DI/AAAAAAAABzQ/pbhGxkgTZNE/s1600/Great+Job+gold+star.png'/>"
     let(:attr) do 
-      { :revisions_attributes => {"0" => {:title => 'New title', :content => 'New Content' } } }
+      { :revisions_attributes => {"0" => {:title => 'New title', :content => content } } }
     end
   
     before do
@@ -96,7 +97,9 @@ RSpec.describe WikiPageController, type: :controller do
   
     it { expect(response).to redirect_to(@page) }
     it { expect(@page.current_revision.title).to eq 'New title' }
-    it { expect(@page.current_revision.content).to eq 'New Content' }
+    it { expect(@page.current_revision.content).to eq content }
+    it {expect(@page.images.size).not_to be 0}
+    it {expect(@page.images[0].location).to eq 'https://1.bp.blogspot.com/-8LKoU28XlQM/UqpDSu-r2DI/AAAAAAAABzQ/pbhGxkgTZNE/s1600/Great+Job+gold+star.png' }
   end
 
   describe "POST #create" do
