@@ -1,3 +1,4 @@
+require 'fastimage'
 # Lets user interact with wiki pages
 class WikiPageController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
@@ -104,6 +105,9 @@ class WikiPageController < ApplicationController
       unless image_in_page?(img['src'], @page)
         image = Image.new(wiki_page_id: @page.id, user: current_user, location: img['src'])
         image.upload_date = DateTime.now
+        size_array = FastImage.size(image.location)
+        image.height = size_array[1]
+        image.width = size_array[0]
         image.save
       end
     end
