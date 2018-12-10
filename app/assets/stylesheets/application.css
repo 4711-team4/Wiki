@@ -40,3 +40,25 @@
  .container .text-tiny {
  	font-size: 5px !important;
  }
+
+ .container .marker-pink {
+	 background-color: hotpink !important;
+ }
+
+ .container .marker-green {
+	background-color: lime !important;
+}
+
+.container .marker-blue {
+	background-color: rgb(9, 98, 231) !important;
+}
+
+.container .pen-red {
+	color: red !important;
+	background: none !important;
+}
+
+.container .pen-green {
+	background: none !important;
+	color: green !important;
+}
