@@ -1,5 +1,5 @@
 class CommentController < ApplicationController
-
+  before_action :authenticate_user!
   # @!method: someone comments on the image
   def create
     comment = Comment.new(comment_params)
