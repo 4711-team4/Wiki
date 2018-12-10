@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   end
 
   resources :image, only: [:show]
-
+  post 'image/:id/comment', to: 'comment#create', as: 'image_comment'
 
   # routes for admin stuff
   get 'admin/index'

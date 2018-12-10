@@ -7,3 +7,17 @@
   <li>width: <%= @image.width %></li>
   <li>height: <%= @image.height %></li>
 </ul>
+
+
+<% @image.comments.each do |comment| %>
+  <p><%= comment.body %></p>
+  <p> commenter: <%= comment.user.username %></p>
+  <p> creation date: <%= comment.created_at %></p>
+<% end %>
+
+<%= form_tag image_comment_path, method: :post do %>
+  <%= text_field_tag 'body', 'Please be nice' %>
+  <%= hidden_field_tag 'user_id', @user.id %>
+  <%= hidden_field_tag 'image_id', @image.id  %>
+  <%= submit_tag 'Post!' %>
+<% end %>
