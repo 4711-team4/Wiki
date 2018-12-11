@@ -1,4 +1,6 @@
 require 'fastimage'
+require 'open-uri'
+
 # Lets user interact with wiki pages
 class WikiPageController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update]
@@ -108,6 +110,7 @@ class WikiPageController < ApplicationController
         size_array = FastImage.size(image.location)
         image.height = size_array[1]
         image.width = size_array[0]
+        image.size = open(image.location).size
         image.save
       end
     end

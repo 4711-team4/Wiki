@@ -14,7 +14,7 @@
         <span class="card-title grey-text text-darken-4">Image Info<i class="material-icons right">close</i></span>
         <p>Height: <%= @image.height %></p>
         <p>Width: <%= @image.width %></p>
-        <p>Size: <%= @image.size %></p>
+        <p>Size: <%= @image.size %> bytes</p>
         <br>
         <p> Image uploaded by <%=@image.user.username %> on <%= @image.created_at %></p>
       </div>
