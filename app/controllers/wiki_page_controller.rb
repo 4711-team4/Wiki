@@ -134,7 +134,7 @@ class WikiPageController < ApplicationController
   def delete_images_if_removed(imgs)
     unless imgs.size == @page.images.size
       @page.images.each do |model|
-        model.delete if image_removed_from_page?(model, imgs)
+        model.destroy if image_removed_from_page?(model, imgs)
       end
     end
   end
