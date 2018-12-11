@@ -37,12 +37,16 @@
 <% end %>
 
 
-<h4> Write your own Comment!</h4>
-<%= form_tag image_comment_path, method: :post do %>
-  <%= text_field_tag 'body', 'Please be nice' %>
-  <%= hidden_field_tag 'user_id',current_user.id %>
-  <%= hidden_field_tag 'image_id', @image.id  %>
-  <%= submit_tag 'Post!', class: 'btn orange' %>
+<% if user_signed_in? %>
+  <h4> Write your own Comment!</h4>
+  <%= form_tag image_comment_path, method: :post do %>
+    <%= text_field_tag 'body', 'Please be nice' %>
+    <%= hidden_field_tag 'user_id',current_user.id %>
+    <%= hidden_field_tag 'image_id', @image.id  %>
+    <%= submit_tag 'Post!', class: 'btn orange' %>
+  <% end %>
+<% else %>
+<p>You must sign in to post a comment.<p>
 <% end %>
 
 
